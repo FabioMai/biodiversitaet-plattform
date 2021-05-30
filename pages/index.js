@@ -2,7 +2,6 @@ import Head from "next/head";
 import { Header, Hero, Projects, Contact, Footer } from "../sections/index";
 import { parseBetterPlace, parseEcoCrowd } from "../utils/parse";
 import { useEffect } from "react";
-import Head from "next/head";
 
 export default function Home({ projects }) {
   useEffect(() => {
