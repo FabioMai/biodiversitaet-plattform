@@ -1,5 +1,5 @@
-import Head from "next/head";
-import { Header, Hero, Projects, Contact, Footer } from "../sections/index";
+import Layout from "../components/layout";
+import { Hero, Projects, Contact } from "../sections/index";
 import { parseBetterPlace, parseEcoCrowd } from "../utils/parse";
 import { useEffect } from "react";
 
@@ -17,23 +17,13 @@ export default function Home({ projects }) {
   }, []);
   return (
     <>
-      <Head>
-        <title>Plattform für Biodiversität</title>
-        <meta
-          name="description"
-          content="Auf unserer Plattform für Biodiversität findest du Infos und Projekte rund um das Thema Biodiversität."
-        />
-        <link rel="icon" href="/favicon.ico" />
-        <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-      </Head>
-
-      <main style={{ scrollBehavior: "smooth" }}>
-        <Header></Header>
-        <Hero></Hero>
-        <Projects projects={projects}></Projects>
-        <Contact></Contact>
-        <Footer></Footer>
-      </main>
+      <Layout title="Plattform für Biodiversität">
+        <main style={{ scrollBehavior: "smooth" }}>
+          <Hero></Hero>
+          <Projects projects={projects}></Projects>
+          <Contact></Contact>
+        </main>
+      </Layout>
     </>
   );
 }
