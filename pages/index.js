@@ -1,8 +1,21 @@
 import Head from "next/head";
 import { Header, Hero, Projects, Contact, Footer } from "../sections/index";
 import { parseBetterPlace, parseEcoCrowd } from "../utils/parse";
+import { useEffect } from "react";
+import Head from "next/head";
 
 export default function Home({ projects }) {
+  useEffect(() => {
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", (user) => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  }, []);
   return (
     <>
       <Head>
@@ -12,6 +25,7 @@ export default function Home({ projects }) {
           content="Auf unserer Plattform für Biodiversität findest du Infos und Projekte rund um das Thema Biodiversität."
         />
         <link rel="icon" href="/favicon.ico" />
+        <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
       </Head>
 
       <main style={{ scrollBehavior: "smooth" }}>
@@ -32,7 +46,9 @@ export async function getStaticProps(context) {
   const betterplaceJson = await res.json();
   const betterplaceProjects = parseBetterPlace(betterplaceJson);
 
-  const response = await fetch(`https://www.ecocrowd.de/projekt-kategorien/artenschutz/`);
+  const response = await fetch(
+    `https://www.ecocrowd.de/projekt-kategorien/artenschutz/`
+  );
   const htmlString = await response.text();
   const ecoCrowdProjects = parseEcoCrowd(htmlString);
 
